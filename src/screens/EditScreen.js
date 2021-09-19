@@ -1,10 +1,24 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useContext } from "react";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import Form from "../components/Form";
+import { Context } from "../context/BlogContext";
 
-const EditScreen = () => {
+const EditScreen = ({ navigation }) => {
+  const id = navigation.getParam("id");
+  const { state, editBlogPost } = useContext(Context);
+
+  const blogPost = state.find((post) => post.id === id);
+
   return (
     <View>
-      <Text> Edit Screen </Text>
+      <Form
+        text="Edit"
+        postTitle={blogPost.title}
+        postContent={blogPost.content}
+        onSave={(title, content) =>
+          editBlogPost(id, title, content, () => navigation.pop())
+        }
+      />
     </View>
   );
 };
