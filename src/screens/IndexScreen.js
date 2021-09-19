@@ -11,12 +11,11 @@ import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { Context } from "../context/BlogContext";
 
 const IndexScreen = ({ navigation }) => {
-  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+  const { state, deleteBlogPost } = useContext(Context);
   //console.log(value);
   return (
     <View>
       <Text />
-      <Button title="Add Blog Post" onPress={() => addBlogPost()} />
       <Text />
       <FlatList
         data={state}
