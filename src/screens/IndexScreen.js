@@ -7,11 +7,11 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { Context } from "../context/BlogContext";
 
-const IndexScreen = () => {
-  const { state, addBlogPost } = useContext(Context);
+const IndexScreen = ({ navigation }) => {
+  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
   //console.log(value);
   return (
     <View>
@@ -23,19 +23,33 @@ const IndexScreen = () => {
         keyExtractor={(posts) => posts.title}
         renderItem={({ item }) => {
           return (
-            <View style={styles.view}>
-              <Text style={styles.title}>
-                {item.title} - {item.id}
-              </Text>
-              <TouchableOpacity onPress={() => console.log(item.id)}>
-                <MaterialIcons style={styles.icon} name="delete" />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Show", { id: item.id })}
+            >
+              <View style={styles.view}>
+                <Text style={styles.title}>
+                  {item.title} - {item.id}
+                </Text>
+                <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                  <MaterialIcons style={styles.icon} name="delete" />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           );
         }}
       />
     </View>
   );
+};
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+        <Feather name="plus" style={styles.icon} />
+      </TouchableOpacity>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({
@@ -51,7 +65,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   icon: {
-    fontSize: 25,
+    fontSize: 30,
+    marginLeft: 10,
   },
 });
 
