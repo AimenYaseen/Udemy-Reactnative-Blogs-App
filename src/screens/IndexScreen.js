@@ -1,18 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { Context } from "../context/BlogContext";
 
 const IndexScreen = ({ navigation }) => {
-  const { state, deleteBlogPost } = useContext(Context);
-  //console.log(value);
+  const { state, deleteBlogPost, getBlogPost } = useContext(Context);
+
+  useEffect(() => {
+    getBlogPost();
+  }, []);
+
   return (
     <View>
       <Text />

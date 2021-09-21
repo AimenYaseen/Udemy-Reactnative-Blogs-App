@@ -29,9 +29,14 @@ const blogReducer = (state, action) => {
 // ACTIONS
 const getBlogPost = (dispatch) => {
   return async () => {
-    const response = await jsonServer.get("/bogposts");
-    // response.data === [{}, {}, {}]
-    dispatch({ type: "getBlogPost", payload: response.data });
+    try {
+      const response = await jsonServer.get("/blogposts");
+      console.log(response.data);
+      // response.data === [{}, {}, {}]
+      dispatch({ type: "getBlogPost", payload: response.data });
+    } catch (e) {
+      console.log(e);
+    }
   };
 };
 
